@@ -98,11 +98,22 @@ var  User=require('../models/user.js')
      req.flash('success', '登出成功');
      res.redirect('/');
  });
+
+
+
+
+ router.get('/post', checkLogin);
+ router.get('/post', function(req, res) {
+      res.render('post',{title:'发表'})
+ });
+
+
  router.post('/post', checkLogin);
  router.post('/post', function(req, res) {
      var currentUser = req.session.user;
      var post = new Post({
          name:currentUser.name,
+         title:req.body.title,
          post:req.body.post
      } );
      post.save(function(err) {

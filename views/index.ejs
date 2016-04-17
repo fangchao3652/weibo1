@@ -1,4 +1,4 @@
-<%- include layout.ejs %>
+<%- include header.ejs %>
 
 <% if (!user) { %>
 <div class="hero-unit">
@@ -9,10 +9,10 @@
     <a class="btn btn-large" href="/reg">立即注册</a>
   </p>
 </div>
-<% } else { %>
-<%- include say.ejs %>
+<% } /*else { %>
+<%- include post.ejs %>
 
-<% } %>
-<%- include posts.ejs %>
+<% }*/ %>
+<%- include postlist.ejs %>
 
 <%- include footer.ejs%>

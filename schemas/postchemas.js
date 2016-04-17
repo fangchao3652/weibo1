@@ -1,8 +1,9 @@
 var mongoose = require('mongoose')
 var PostSchema = new mongoose.Schema({
-    name: String,
-    post: String,
-    time: {
+    name: String,//作者
+    title: String,//题目
+    post: String,//内容
+    time: {//发表时间
         type: Date,
         default: Date.now()
     }

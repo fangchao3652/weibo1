@@ -1,0 +1,15 @@
+<%- include header %>
+<% if (user) { %>
+<form method="post" action="/post" class="well form-inline center" style="text-align:center;"
+      xmlns="http://www.w3.org/1999/html">
+    标题：</br>
+    <input type="text" name="title"/></br>
+    正文：</br>
+    <textarea type="text" class="span8" name="post"></textarea></br>
+    <button type="submit" class="btn btn-success">
+        <i class="icon-comment icon-white"> </i>
+        发表
+    </button>
+</form>
+<% } %>
+<%- include footer %>

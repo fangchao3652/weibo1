@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 var flash = require('connect-flash');
 var routes = require('./routes/index');
 
-var mongoose = require('mongoose'); 
+var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/weibo');
 var dbsetting = require('./setting.js')
 var app = express();

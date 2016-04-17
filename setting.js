@@ -1,6 +1,6 @@
 module.exports = {
-    cookieSecret: 'fangchao',
-    db: 'weibo',
+    cookieSecret: 'fangchaokey',
+    db: 'blog',
     host: 'localhost',
-    url:'mongodb://localhost/weibo'
+    url:'mongodb://localhost/blog'
 };
