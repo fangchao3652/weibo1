@@ -1,3 +1,5 @@
+var markdown = require('markdown').markdown;
+
 var mongoose = require('mongoose')
 var PostSchema = new mongoose.Schema({
     name: String,//作者
@@ -25,7 +27,15 @@ PostSchema.statics = {
         if (username) {
             query.name = username;
         }
-        this.find(query).sort({time: -1}).exec(callback);
+
+
+        this.find(query, function (err, docs) {
+            docs.forEach(function (doc) {
+                doc.post = markdown.toHTML(doc.post);
+            })
+            callback(err, docs);
+        }).sort({time: -1});
+
     }
 }
 

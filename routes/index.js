@@ -3,6 +3,8 @@
  var router = express.Router();
 var  User=require('../models/user.js')
  var Post=require('../models/post.js')
+
+
  router.get('/', function(req, res, next) {
      Post.getpost(null, function(err, posts) {
 
@@ -139,6 +141,9 @@ var  User=require('../models/user.js')
                  req.flash('error', err);
                  return res.redirect('/');
              }
+
+
+
              res.render('user', {
                  title: user.name,
                  posts: posts
