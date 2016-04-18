@@ -9,10 +9,10 @@ var flash = require('connect-flash');
 var routes = require('./routes/index');
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/weibo');
+
 var dbsetting = require('./setting.js')
 var app = express();
-
+mongoose.connect(dbsetting.url);
 app.set('port', process.env.PORT || 3000);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

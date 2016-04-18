@@ -1,0 +1,15 @@
+<%- include header %>
+<% if (user) { %>
+<form method="post" action="/edit/<%= post._id %>" class="well form-inline center" style="text-align:center;"
+      xmlns="http://www.w3.org/1999/html">
+    标题：</br>
+    <input type="text" name="title" value="<%= post.title %>"/></br>
+    正文：</br>
+    <textarea type="text"  name="post"><%=post.post%></textarea></br>
+    <button type="submit" class="btn btn-success">
+        <i class="icon-comment icon-white"> </i>
+        保存修改
+    </button>
+</form>
+<% } %>
+<%- include footer %>

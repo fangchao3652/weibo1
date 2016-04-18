@@ -3,9 +3,14 @@ if (index % 3 == 0) { %>
 <div class="row">
     <% } %>
     <div class="span4">
-        <h2><a href="/u/<%= post.name %>"><%= post.name %></a> 说</h2>
+        <p>
+
+        <h2><a href="/article/<%= post._id %>"><%= post.title %></a></h2></p>
+
+        作者：<a href="/u/<%= post.name %>"><%= post.name %></a>
 
         <p>
+            日期：
             <small><%= post.time %></small>
         </p>
         <p><%- post.post %></p>

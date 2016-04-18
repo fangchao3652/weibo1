@@ -1,0 +1,17 @@
+<%- include header.ejs %>
+
+<p class="text-info"><h2><a href="/article/<%= post._id %> "><%= post.title %></a></h2>
+<%if(user.name===post.name){%>
+<a href="/edit/<%= post._id %>"> 编辑</a> <br>
+<a href="/remove/<%= post._id %>"> 删除</a><br>
+<%}%>
+
+作者：<a href="/u/<%= post.name %>"><%= post.name %></a>
+
+<p>
+    日期：
+    <small><%= post.time %></small>
+</p>
+<p><%- post.post %></p>
+
+<%- include footer.ejs %>
