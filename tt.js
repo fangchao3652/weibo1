@@ -10,4 +10,4 @@ arryAll.forEach(function(e){
 })
 console.log(arryAll)//[ { age: 4 }, { age: 4 }, { age: 4 }, { age: 4 } ]
 
-
+//push  测试
