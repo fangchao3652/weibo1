@@ -49,7 +49,7 @@ PostSchema.statics = {
      * @returns {Promise}
      */
     getpostById: function (id, callback) {
-        return this.findOne({_id: id},function (err, doc) {
+        return this.findOne({_id: id}, function (err, doc) {
             if (doc) {
                 doc.post = markdown.toHTML(doc.post);
                 callback(err, doc);
@@ -57,9 +57,6 @@ PostSchema.statics = {
 
         });
     },
-
-
-
 
 
     /**
@@ -93,11 +90,21 @@ PostSchema.statics = {
      * @param id
      * @param callback
      */
-    updateArticle: function (id, setstr,callback) {
+    updateArticle: function (id, setstr, callback) {
         var condition = {_id: id};
-        var update = {$set:setstr};
+        var update = {$set: setstr};
         var options = {upsert: true};
-        return this.update(condition, update, options,callback);
+        return this.update(condition, update, options, callback);
+    },
+    /**
+     * 删除文章
+     * @param id
+     * @param callback
+     * @returns {Promise|Query|*}
+     */
+    removeArticle: function (id, callback) {
+        var conditions = {_id: id};
+        return this.remove(conditions, callback);
     }
 
 

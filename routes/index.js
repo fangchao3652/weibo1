@@ -171,7 +171,7 @@ router.get('/edit/:id', function (req, res) {
     Post.getpostByIdForEdit(req.params.id, function (err, doc) {
         if (err) {
             req.flash("error", err);
-            return res.redirect('/');
+            return res.redirect('back');//相当于不跳转
         }
         res.render('edit', {
             title: '文章编辑',
@@ -197,6 +197,22 @@ router.post('/edit/:id', function (req, res) {
         return res.redirect('/article/' + req.params.id)
     });
 
+});
+
+/**
+ * 删除  删除完直接跳到首页 不用动态的用ajax删除，因为这个删除链接目前在文章详情里 删除后 这个页面就没了
+ * 当有管理页面，列表形式管理的时候要用ajax 然后动态删除该元素（参考删除电影  imooc_movie）
+ */
+router.get('/remove/:id', checkLogin)
+router.get('/remove/:id', function (req, res) {
+    Post.removeArticle(req.params.id, function (err) {
+        if (err) {
+            req.flash('error', err);
+            return res.redirect('back');
+        }
+        req.flash('success', '删除成功');
+        res.redirect('/');
+    });
 });
 
 
