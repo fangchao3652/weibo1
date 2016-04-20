@@ -8,7 +8,8 @@ var UserSchema = new mongoose.Schema({
             type: Date,
             default: Date.now()//
         }
-    }
+    },
+    email: String
 
 });
 
@@ -29,7 +30,7 @@ UserSchema.statics = {
         return this.findOne({_id: id}).sort('regtime.createAt').exec(callback)
     },
     findByName: function (name, callback) {
-        return this.findOne({name:name}).sort('regtime.createAt').exec(callback)
+        return this.findOne({name: name}).sort('regtime.createAt').exec(callback)
     }
 }
 

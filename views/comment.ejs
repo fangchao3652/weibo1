@@ -1,0 +1,19 @@
+<% post.comments.forEach(function (comment, index) { %>
+<p xmlns="http://www.w3.org/1999/html"><a href="<%= comment.website %>"><%= comment.name %></a></p>
+<span class="text-info">回复于<%= comment.time %></span>
+<p><%- comment.content %></p>
+<% }) %>
+
+<form method="post" action="/article/<%= post._id %> ">
+    <% if(user){ %>
+    用户名：<input type="text" name="name" value="<%= user.name %>"/><br/>
+    邮箱：<input type="text" name="email" value="<%= user.email %>"/><br/>
+    个人主页：<input type="text" name="website" value='/u/<%=user.name%>'/><br/>
+    <% }else{ %>
+    用户名：<input type="text" name="name"/><br/>
+    邮箱：<input type="text" name="email"/><br/>
+    个人主页：<input type="text" name="website" value="http://"/><br/>
+    <% } %>
+    <textarea name="content" rows="=5" cols="80"></textarea><br/>
+    <input type="submit" value="留言"/>
+</form>

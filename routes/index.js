@@ -3,6 +3,7 @@ var crypto = require('crypto');
 var router = express.Router();
 var User = require('../models/user.js')
 var Post = require('../models/post.js')
+var Comment = require('../models/comment.js')
 
 
 router.get('/', function (req, res, next) {
@@ -39,7 +40,8 @@ router.post('/reg', function (req, res, next) {
 
     var newUser = new User({
         name: req.body.username,
-        password: password
+        password: password,
+        email: req.body.email
     });
     //检测用户是否存在
     User.findByName(newUser.name, function (err, user) {
@@ -214,8 +216,44 @@ router.get('/remove/:id', function (req, res) {
         res.redirect('/');
     });
 });
+/**
+ * 留言
+ */
+router.post('/article/:id', function (req, res) {
+    var date = new Date();
+    var articleId = req.params.id;
+    var newcommnent = new Comment({
+        articleId: articleId,
+        name: req.body.name,
+        email: req.body.email,
+        website: req.body.website,
+        content: req.body.content,
+        time: date
+    });
 
 
+    newcommnent.save(function (err, doc) {
+
+        console.log('==========doc========' + doc)
+        if (err) {
+            req.flash('error', err);
+            return res.redirect('back');
+        }
+//更新 文章  留言字段
+        var condition = {_id: articleId};
+        var update = {$push: {comments: doc}};
+
+        Post.update(condition, update, function (err) {
+            if (err) {
+                req.flash('error', err);
+                return res.redirect('back');
+            }
+            req.flash('success', '留言成功');
+            res.redirect('back');
+        });
+
+    });
+});
 /**
  * 权限控制
  * @param req

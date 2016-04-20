@@ -8,7 +8,8 @@ var PostSchema = new mongoose.Schema({
     time: {//发表时间
         type: Date,
         default: Date.now()
-    }
+    },
+    comments:Array
 });
 /**
  * 如没有这个 存储前的预处理  存储时间就会一直是 数据库第一次打开时的时间，不是服务器启动的时间
