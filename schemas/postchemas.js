@@ -9,7 +9,7 @@ var PostSchema = new mongoose.Schema({
         type: Date,
         default: Date.now()
     },
-    comments:Array
+    comments: Array
 });
 /**
  * 如没有这个 存储前的预处理  存储时间就会一直是 数据库第一次打开时的时间，不是服务器启动的时间
@@ -43,6 +43,33 @@ PostSchema.statics = {
         }).sort({time: -1});
 
     },
+
+
+    /**
+     * 分页  一次获取十篇文章
+     * @param username
+     * @param page
+     * @param callback
+     */
+    getTen: function (username, page, callback) {
+        var query = {};
+        if (username) {
+            query.name = username;
+        }
+        this.count(query, function (err, total) {
+            this.find(query, function (err, docs) {
+                docs.forEach(function (doc) {
+                    doc.post = markdown.toHTML(doc.post);
+                })
+                callback(err, docs,total);
+            }).sort({time: -1}).skip((page - 1) * 10).limit(10);
+        });
+
+
+    }
+
+
+    ,
     /**
      * 根据文章唯一编号查找 一篇文章(因为返回的是markdown 编码后的所以修改文章是查找不用这个)
      * @param id

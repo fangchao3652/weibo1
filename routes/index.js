@@ -7,15 +7,22 @@ var Comment = require('../models/comment.js')
 
 
 router.get('/', function (req, res, next) {
-    Post.getpost(null, function (err, posts) {
+    var page = req.query.p ? req.query.p : 1;
+    console.log(req.query)
+    Post.getTen(null, page, function (err, posts, total) {
 
         if (err) {
             req.flash('error', err);
             return res.redirect('/');
         }
         res.render('index', {
-            title: '首页',
-            posts: posts
+            title: page,
+            posts: posts,
+            /////
+            page: page,
+            isFirstPage: (page - 1) == 0,
+            isLastPage: ((page - 1) * 10 + posts.length) == total
+
         });
     });
 
@@ -234,7 +241,7 @@ router.post('/article/:id', function (req, res) {
 
     newcommnent.save(function (err, doc) {
 
-        console.log('==========doc========' + doc)
+        // console.log('==========doc========' + doc)
         if (err) {
             req.flash('error', err);
             return res.redirect('back');

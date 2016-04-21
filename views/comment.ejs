@@ -1,7 +1,8 @@
 <% post.comments.forEach(function (comment, index) { %>
 <p xmlns="http://www.w3.org/1999/html"><a href="<%= comment.website %>"><%= comment.name %></a></p>
-<span class="text-info">回复于<%= comment.time %></span>
+<span class="text-info">评论于<%= comment.time %></span>
 <p><%- comment.content %></p>
+<p>-------------------------------------------</p>
 <% }) %>
 
 <form method="post" action="/article/<%= post._id %> ">
