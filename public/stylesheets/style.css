@@ -1,8 +1,25 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
-  color: #00B7FF;
+    color: #00B7FF;
+}
+
+.tag {
+    background-color: #ff0000;
+    border-radius: 3px;
+    font-size: 14px;
+    color: #ffffff;
+    display: inline-block;
+    padding: 0 5px;
+    margin-bottom: 8px;
+}
+
+.tag:hover {
+    text-decoration: none;
+    background-color: #ffffff;
+    color: #000000;
+    -webkit-transition: color .2s linear;
 }

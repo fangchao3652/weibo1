@@ -1,0 +1,15 @@
+<%- include header %>
+
+  <ul class="archive">
+   <% var lastYear = 0 %>
+   <% posts.forEach(function (post, index) { %>
+
+   <li><h3><%= post.time %></h3></li>
+
+   <li><a href="/article/<%= post._id %> "><%= post.title %></a></li>
+<%})%>
+
+
+
+ </ul>
+<%- include footer %>

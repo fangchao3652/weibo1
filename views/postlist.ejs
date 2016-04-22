@@ -13,6 +13,17 @@ if (index % 3 == 0) { %>
             日期：
             <small><%= post.time %></small>
         </p>
+
+        <p>
+            标签：
+            <% post.tags.forEach(function (tag, index) { %>
+            <% if(tag){ %>
+            <% } %>
+            <a class="tag" href="/tags/<%= tag %>"><%= tag %></a>
+            <% }) %>
+
+        </p>
+
         <p><%- post.post %></p>
     </div>
     <% if (index % 3 == 2) { %>

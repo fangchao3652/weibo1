@@ -119,10 +119,13 @@ router.get('/post', function (req, res) {
 router.post('/post', checkLogin);
 router.post('/post', function (req, res) {
     var currentUser = req.session.user;
+    var tags = [req.body.tag1, req.body.tag2, req.body.tag3];
+
     var post = new Post({
         name: currentUser.name,
         title: req.body.title,
-        post: req.body.post
+        post: req.body.post,
+        tags:tags
     });
     post.save(function (err) {
         if (err) {
@@ -262,6 +265,41 @@ router.post('/article/:id', function (req, res) {
     });
 });
 /**
+ *  所有标签
+ */
+router.get('/tags',function(req,res){
+    Post.getTags(function (err,tags) {
+        if (err) {
+            req.flash('error', err);
+            return res.redirect('/');
+        }
+        res.render('tags',{
+            title:'标签',
+            tags:tags
+        });
+    });
+});/**
+ *  单个标签
+ */
+router.get('/tags/:tag',function(req,res){
+    var tag=req.params.tag;
+    Post.getTag(tag,function (err,posts) {
+        if (err) {
+            req.flash('error', err);
+            return res.redirect('/');
+        }
+        res.render('tag',{
+            title:'标签:'+tag,
+            posts:posts
+        });
+    });
+});
+
+
+
+
+
+/**
  * 权限控制
  * @param req
  * @param res
@@ -281,5 +319,6 @@ function checkNotLogin(req, res, next) {
     }
     next();
 }
+
 
 module.exports = router;

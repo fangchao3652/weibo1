@@ -11,6 +11,15 @@
 <p>
     日期：
     <small><%= post.time %></small>
+<p>
+    标签：
+    <% post.tags.forEach(function (tag, index) { %>
+    <% if(tag){ %>
+    <% } %>
+    <a class="tag" href="/tags/<%= tag %>"><%= tag %></a>
+    <% }) %>
+
+</p>
 </p>
 <p><%- post.post %></p>
 <%- include comment.ejs%>

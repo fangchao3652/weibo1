@@ -9,7 +9,8 @@ var PostSchema = new mongoose.Schema({
         type: Date,
         default: Date.now()
     },
-    comments: Array
+    comments: Array,
+    tags: Array
 });
 /**
  * 如没有这个 存储前的预处理  存储时间就会一直是 数据库第一次打开时的时间，不是服务器启动的时间
@@ -61,7 +62,7 @@ PostSchema.statics = {
                 docs.forEach(function (doc) {
                     doc.post = markdown.toHTML(doc.post);
                 })
-                callback(err, docs,total);
+                callback(err, docs, total);
             }).sort({time: -1}).skip((page - 1) * 10).limit(10);
         });
 
@@ -133,8 +134,25 @@ PostSchema.statics = {
     removeArticle: function (id, callback) {
         var conditions = {_id: id};
         return this.remove(conditions, callback);
+    },
+    /**
+     * 获取所有的标签
+     * @param callback
+     * @returns {Promise}
+     */
+    getTags: function (callback) {
+        return  this.distinct("tags").exec(callback)
+    },
+    /**
+     * 获取某一个标签下的文章
+     * 查询所有 tags数组内包含tag的文档
+     * 并返回只含有name  time title 组成的数组
+     * @param tag
+     * @param callback
+     */
+    getTag: function (tag,callback) {
+        return this.find({tags:tag},{name:1,title:1,time:1}).exec(callback)   //1 代表显示该字段  0代表显示除此字段外的字段，若有0就不能有1
     }
-
 
 }
 
