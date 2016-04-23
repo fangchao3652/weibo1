@@ -125,7 +125,7 @@ router.post('/post', function (req, res) {
         name: currentUser.name,
         title: req.body.title,
         post: req.body.post,
-        tags:tags
+        tags: tags
     });
     post.save(function (err) {
         if (err) {
@@ -267,36 +267,50 @@ router.post('/article/:id', function (req, res) {
 /**
  *  所有标签
  */
-router.get('/tags',function(req,res){
-    Post.getTags(function (err,tags) {
+router.get('/tags', function (req, res) {
+    Post.getTags(function (err, tags) {
         if (err) {
             req.flash('error', err);
             return res.redirect('/');
         }
-        res.render('tags',{
-            title:'标签',
-            tags:tags
+        res.render('tags', {
+            title: '标签',
+            tags: tags
         });
     });
-});/**
+});
+/**
  *  单个标签
  */
-router.get('/tags/:tag',function(req,res){
-    var tag=req.params.tag;
-    Post.getTag(tag,function (err,posts) {
+router.get('/tags/:tag', function (req, res) {
+    var tag = req.params.tag;
+    Post.getTag(tag, function (err, posts) {
         if (err) {
             req.flash('error', err);
             return res.redirect('/');
         }
-        res.render('tag',{
-            title:'标签:'+tag,
-            posts:posts
+        res.render('tag', {
+            title: '标签:' + tag,
+            posts: posts
         });
     });
 });
 
-
-
+/**
+ * 根据 关键字search文章  支持 正则表达式
+ */
+router.get('/search', function (req, res) {
+    Post.search(req.query.keyword, function (err, posts) {
+        if (err) {
+            req.flash('error', err)
+            return res.redirect('/');
+        }
+        res.render('search',{
+            title:'Search:'+req.query.keyword,
+            posts:posts
+        })
+    });
+});
 
 
 /**

@@ -84,9 +84,9 @@ PostSchema.statics = {
     getpostById: function (id, callback) {
         return this.findOne({_id: id}, function (err, doc) {
             if (doc) {
-                this.update({_id:id},{$inc:{pv:1}},function (err){
-                    if(err)
-                    return callback(err);
+                this.update({_id: id}, {$inc: {pv: 1}}, function (err) {
+                    if (err)
+                        return callback(err);
                 });
 
 
@@ -162,6 +162,18 @@ PostSchema.statics = {
      */
     getTag: function (tag, callback) {
         return this.find({tags: tag}, {name: 1, title: 1, time: 1}).exec(callback)   //1 代表显示该字段  0代表显示除此字段外的字段，若有0就不能有1
+    }
+
+    ,
+    /**
+     * 根据 关键字search文章  支持 正则表达式
+     * @param keyword
+     * @param callback
+     * @returns {Promise}
+     */
+    search: function (keyword, callback) {
+        var pattern = new RegExp("^.*" + keyword + ".*$", "i");
+        return this.find({title: pattern}, {name: 1, title: 1, time: 1}).sort({time: -1}).exec(callback)
     }
 
 }
