@@ -25,6 +25,8 @@ if (index % 3 == 0) { %>
         </p>
 
         <p><%- post.post %></p>
+        <p class="info">阅读：<%=post.pv%>|评论：<%=post.comments.length%></p>
+
     </div>
     <% if (index % 3 == 2) { %>
 </div><!-- end row -->

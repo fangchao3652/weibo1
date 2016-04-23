@@ -10,7 +10,11 @@ var PostSchema = new mongoose.Schema({
         default: Date.now()
     },
     comments: Array,
-    tags: Array
+    tags: Array,
+    pv: {//pv统计
+        type: Number,
+        default: 0
+    }
 });
 /**
  * 如没有这个 存储前的预处理  存储时间就会一直是 数据库第一次打开时的时间，不是服务器启动的时间
@@ -80,6 +84,12 @@ PostSchema.statics = {
     getpostById: function (id, callback) {
         return this.findOne({_id: id}, function (err, doc) {
             if (doc) {
+                this.update({_id:id},{$inc:{pv:1}},function (err){
+                    if(err)
+                    return callback(err);
+                });
+
+
                 doc.post = markdown.toHTML(doc.post);
                 callback(err, doc);
             }
@@ -141,7 +151,7 @@ PostSchema.statics = {
      * @returns {Promise}
      */
     getTags: function (callback) {
-        return  this.distinct("tags").exec(callback)
+        return this.distinct("tags").exec(callback)
     },
     /**
      * 获取某一个标签下的文章
@@ -150,8 +160,8 @@ PostSchema.statics = {
      * @param tag
      * @param callback
      */
-    getTag: function (tag,callback) {
-        return this.find({tags:tag},{name:1,title:1,time:1}).exec(callback)   //1 代表显示该字段  0代表显示除此字段外的字段，若有0就不能有1
+    getTag: function (tag, callback) {
+        return this.find({tags: tag}, {name: 1, title: 1, time: 1}).exec(callback)   //1 代表显示该字段  0代表显示除此字段外的字段，若有0就不能有1
     }
 
 }
