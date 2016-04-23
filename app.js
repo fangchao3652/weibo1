@@ -57,6 +57,12 @@ app.use(function (  req, res, next) {
 
 app.use('/', routes);
 
+/**
+ * 404
+ */
+app.use(function (req,res) {
+    res.render('4041');
+});
 
 
 /*

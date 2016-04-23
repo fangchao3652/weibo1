@@ -24,8 +24,9 @@ router.get('/', function (req, res, next) {
             isLastPage: ((page - 1) * 10 + posts.length) == total
 
         });
-    });
 
+    });
+    //  next();  若有这句 就一直往404跳
 
 });
 //注册 显示form
@@ -305,11 +306,17 @@ router.get('/search', function (req, res) {
             req.flash('error', err)
             return res.redirect('/');
         }
-        res.render('search',{
-            title:'Search:'+req.query.keyword,
-            posts:posts
+        res.render('search', {
+            title: 'Search:' + req.query.keyword,
+            posts: posts
         })
     });
+});
+/**
+ * 404  放在这  或放在 app.js里都行
+ */
+router.use(function (req, res) {
+    res.render('4041');
 });
 
 
@@ -326,6 +333,8 @@ function checkLogin(req, res, next) {
     }
     next();
 }
+
+
 function checkNotLogin(req, res, next) {
     if (req.session.user) {
         req.flash('error', '已登入');
